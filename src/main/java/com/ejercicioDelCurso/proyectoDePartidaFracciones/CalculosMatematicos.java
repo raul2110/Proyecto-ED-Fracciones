@@ -1,4 +1,4 @@
-package com.ejercicioDelCurso.proyectoDePartidaFracciones;
+package main.java.com.ejercicioDelCurso.proyectoDePartidaFracciones;
 
 import java.util.ArrayList;
 import java.util.SortedMap;
