@@ -1,4 +1,4 @@
-package com.ejercicioDelCurso.proyectoDePartidaFracciones;
+package test.java.com.ejercicioDelCurso.proyectoDePartidaFracciones;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,6 +10,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import main.java.com.ejercicioDelCurso.proyectoDePartidaFracciones.CalculosMatematicos;
 
 class CalculosMatematicosTest {
 

@@ -1,6 +1,4 @@
-package com.ejercicioDelCurso.proyectoDePartidaFracciones;
-
-
+package main.java.com.ejercicioDelCurso.proyectoDePartidaFracciones;
 
 
 public class Fraccion {
