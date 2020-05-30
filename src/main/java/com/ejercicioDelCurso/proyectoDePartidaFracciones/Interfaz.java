@@ -10,6 +10,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicArrowButton;
 
+import clasesJPanelPersonales.*;
+
 import java.awt.Component;
 import java.io.IOException;
 import java.util.LinkedList;
