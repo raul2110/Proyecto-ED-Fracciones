@@ -1,6 +1,9 @@
 package main.java.com.ejercicioDelCurso.proyectoDePartidaFracciones;
 
-public class Fraccion {
+import java.io.Serializable;
+
+public class Fraccion implements Serializable{
+
 	private int numerador;
 	private int denominador;
 
@@ -9,21 +12,7 @@ public class Fraccion {
 		this.numerador = numerador;
 		this.denominador = denominador;
 	}
-/*
- * 	Añadir las siguientes operaciones a Fracción
- * 
- * 
- * 
-	public static Fraccion simplifica(Fraccion entrada) {
-	}
-	
-	public static Fraccion suma(Fraccion sumando1, Fraccion sumando2) {
-	}
-	public static Fraccion multiplicacion(Fraccion sumando1, Fraccion sumando2) {
-	}
-	public static Fraccion division(Fraccion sumando1, Fraccion sumando2) {
-	}
-*/
+
 	public int getNumerador() {
 		return numerador;
 	}
@@ -31,7 +20,6 @@ public class Fraccion {
 	public int getDenominador() {
 		return denominador;
 	}
-
 
 	public void setNumerador(int numerador) {
 		this.numerador = numerador;
@@ -42,10 +30,42 @@ public class Fraccion {
 	}
 
 	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(numerador).append(" / ").append(denominador);
-		return sb.toString();
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + denominador;
+		result = prime * result + numerador;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Fraccion other = (Fraccion) obj;
+		if (denominador != other.denominador)
+			return false;
+		if (numerador != other.numerador)
+			return false;
+		return true;
 	}
 
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
