@@ -42,7 +42,7 @@ public class JPanelMenuInicioSesion extends JPanel{
 			this.add(panelInicioSesion);
 			panelInicioSesion.setLayout(null);
 			
-			JLabel msgIniciarSesion = new JLabel("Iniciar SesiÃ³n", SwingConstants.CENTER);
+			JLabel msgIniciarSesion = new JLabel("Iniciar Sesión", SwingConstants.CENTER);
 			msgIniciarSesion.setFont(new Font("Bahnschrift", Font.PLAIN, 18));
 			msgIniciarSesion.setBounds(0, 11, 456, 19);
 			panelInicioSesion.add(msgIniciarSesion);
@@ -52,10 +52,10 @@ public class JPanelMenuInicioSesion extends JPanel{
 			msgIntroducirCorreo.setBounds(32, 56, 136, 19);
 			panelInicioSesion.add(msgIntroducirCorreo);
 			
-			JLabel msgIntroducirContraseÃ±a = new JLabel("ContraseÃ±a:", SwingConstants.RIGHT);
-			msgIntroducirContraseÃ±a.setFont(new Font("Bahnschrift", Font.BOLD, 15));
-			msgIntroducirContraseÃ±a.setBounds(32, 86, 136, 19);
-			panelInicioSesion.add(msgIntroducirContraseÃ±a);
+			JLabel msgIntroducirContraseña = new JLabel("Contraseña:", SwingConstants.RIGHT);
+			msgIntroducirContraseña.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+			msgIntroducirContraseña.setBounds(32, 86, 136, 19);
+			panelInicioSesion.add(msgIntroducirContraseña);
 			
 			textFieldCorreo = new JTextField();
 			textFieldCorreo.setBounds(178, 54, 183, 20);
@@ -78,11 +78,11 @@ public class JPanelMenuInicioSesion extends JPanel{
 			lblMainMenuAdvice.setVisible(false);
 			this.add(lblMainMenuAdvice);
 			
-			JLabel lblRegistro = new JLabel("Â¿No tiene una cuenta?", SwingConstants.CENTER);
+			JLabel lblRegistro = new JLabel("¿No tiene una cuenta?", SwingConstants.CENTER);
 			lblRegistro.setBounds(324, 459, 136, 14);
 			this.add(lblRegistro);
 			
-			JButton btnRegistro = new JButton("Registrese aquÃ­");
+			JButton btnRegistro = new JButton("Registrese aquí");
 			btnRegistro.setBackground(Color.GREEN);
 			btnRegistro.setBounds(321, 484, 142, 23);
 			this.add(btnRegistro);
