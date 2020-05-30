@@ -4,6 +4,9 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import main.java.com.ejercicioDelCurso.proyectoDePartidaFracciones.CalculosMatematicos;
+import main.java.com.ejercicioDelCurso.proyectoDePartidaFracciones.Fraccion;
+
 
 public class AppMain {
 
