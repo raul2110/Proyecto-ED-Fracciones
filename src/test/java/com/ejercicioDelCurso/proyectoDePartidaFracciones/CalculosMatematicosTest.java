@@ -11,7 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import main.java.com.ejercicioDelCurso.proyectoDePartidaFracciones.CalculosMatematicos;
+import fracciones.CalculosMatematicos;
 
 class CalculosMatematicosTest {
 

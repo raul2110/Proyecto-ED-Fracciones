@@ -1,4 +1,4 @@
-package main.java.com.ejercicioDelCurso.proyectoDePartidaFracciones;
+package fracciones;
 
 import java.util.ArrayList;
 import java.util.Collections;
