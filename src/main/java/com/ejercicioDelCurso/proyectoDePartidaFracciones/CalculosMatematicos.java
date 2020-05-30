@@ -9,11 +9,26 @@ public class CalculosMatematicos {
 		return numero % 2 == 0;
 	}
 
+	public static ArrayList<Integer> divisoresTotales(int n1){
+		
+		ArrayList<Integer> divisores = new ArrayList<>();
+		
+		divisores.add(n1);
+		
+		for(int i=n1/2; i > 0; i--) {
+		
+			if(n1 % i == 0) {
+				divisores.add(i);
+			}
+		}
+		
+		return divisores;
+	}
 	/*
 	 * 
-	 * Este mÃ©todo se usa para descomponer un nÃºmero en sus factores primos Genera
-	 * un mapa ordenado donde cada clave es un divisor primo del nÃºmero y cuyo valor
-	 * es el nÃºmero de veces que incluye ese divisor primo.
+	 * Este método se usa para descomponer un número en sus factores primos Genera
+	 * un mapa ordenado donde cada clave es un divisor primo del número y cuyo valor
+	 * es el número de veces que incluye ese divisor primo.
 	 * 
 	 */
 	public static SortedMap<Integer, Integer> divisores(int numero) {
@@ -67,5 +82,23 @@ public class CalculosMatematicos {
 		return primo;
 	}
 
+	public static ArrayList<Integer> DescomposicionPrimos(int n1, ArrayList<Integer> res){
+		
+		res.add(n1);
+		
+		if(n1 == 1) {
+			return res;
+		}
+		
+		int i = 2;
+		
+		while(n1%i != 0) {
+			i++;
+		}
+		
+		DescomposicionPrimos(n1/=i, res);
+		
+		return res;
+	}
 	
 }
