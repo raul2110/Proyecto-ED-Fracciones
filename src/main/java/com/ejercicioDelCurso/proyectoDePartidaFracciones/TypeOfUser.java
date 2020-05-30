@@ -1,4 +1,4 @@
-package objects;
+package main.java.com.ejercicioDelCurso.proyectoDePartidaFracciones;
 
 public enum TypeOfUser {
 
