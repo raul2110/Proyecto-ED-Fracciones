@@ -1,4 +1,4 @@
-package main.java.com.ejercicioDelCurso.proyectoDePartidaFracciones;
+package clasesJPanelPersonales;
 
 import java.awt.Color;
 import java.awt.Font;

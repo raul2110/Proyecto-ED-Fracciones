@@ -1,4 +1,4 @@
-package main.java.com.ejercicioDelCurso.proyectoDePartidaFracciones;
+package clasesJPanelPersonales;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.io.DataInputStream;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,28 +22,26 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.plaf.basic.BasicArrowButton;
 
-import fracciones.Fraccion;
-import fracciones.SimplificarFracciones;
+import fracciones.CalculosMatematicos;
 import main.java.com.ejercicioDelCurso.proyectoDePartidaFracciones.Interfaz;
 
-public class JPanelSimplificar extends JPanel{
+public class JPanelDescomponer extends JPanel{
+
+	JLabel lblNewLabel, lblNumeroEjercicio ;
+	JTextField textField;
 	
-	JTextField denominadorRes, numeradorRes;
+	File ejerciciosDescomposicion = new File("EjerciciosDescomposicion");
 	
-	JLabel lblNumeroEjercicio, lblTitulo, numerador, denominador;
-	
-	File EjerciciosSimplificar = new File("EjerciciosSimplificar");
-	
-	ArrayList<Fraccion> ejercicios = new ArrayList<>();
+	ArrayList<Integer> ejercicios = new ArrayList<>();
 	
 	int ejerciciosIndex = 0;
 	
-	public JPanelSimplificar() {
-		this.setBackground(new Color(123, 104, 238));
+	public JPanelDescomponer(){
+		this.setBackground(new Color(233, 150, 122));
 		this.setBounds(0, 0, 784, 561);
 		this.setLayout(null);
 		
-		lblTitulo = new JLabel("", SwingConstants.CENTER);
+		JLabel lblTitulo = new JLabel("", SwingConstants.CENTER);
 		lblTitulo.setFont(new Font("DejaVu Sans", Font.BOLD, 23));
 		lblTitulo.setBounds(147, 11, 490, 54);
 		this.add(lblTitulo);
@@ -54,45 +53,20 @@ public class JPanelSimplificar extends JPanel{
 		
 		JPanel panelEjercicio = new JPanel();
 		panelEjercicio.setBackground(Color.WHITE);
-		panelEjercicio.setBounds(84, 155, 616, 300);
+		panelEjercicio.setBounds(84, 146, 616, 279);
 		this.add(panelEjercicio);
 		panelEjercicio.setLayout(null);
 		
-		numerador = new JLabel("", SwingConstants.CENTER);
-		numerador.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		numerador.setBounds(150, 76, 130, 50);
-		panelEjercicio.add(numerador);
-		
-		JLabel lblNewLabel = new JLabel("---------------",  SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel.setBounds(150, 146, 130, 14);
+		lblNewLabel = new JLabel("", SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		lblNewLabel.setBounds(180, 54, 255, 45);
 		panelEjercicio.add(lblNewLabel);
 		
-		denominador = new JLabel("", SwingConstants.CENTER);
-		denominador.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		denominador.setBounds(150, 176, 130, 50);
-		panelEjercicio.add(denominador);
-		
-		JLabel lblEquals = new JLabel("=", SwingConstants.CENTER);
-		lblEquals.setFont(new Font("Tahoma", Font.PLAIN, 40));
-		lblEquals.setBounds(278, 11, 59, 278);
-		panelEjercicio.add(lblEquals);
-		
-		numeradorRes = new JTextField(SwingConstants.CENTER);
-		numeradorRes.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		numeradorRes.setBounds(347, 76, 130, 50);
-		panelEjercicio.add(numeradorRes);
-		numeradorRes.setColumns(10);
-		
-		JLabel lblNewLabel1 = new JLabel("---------------",  SwingConstants.CENTER);
-		lblNewLabel1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel1.setBounds(347, 146, 130, 14);
-		panelEjercicio.add(lblNewLabel1);
-		
-		denominadorRes = new JTextField(10);
-		denominadorRes.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		denominadorRes.setBounds(347, 176, 130, 50);
-		panelEjercicio.add(denominadorRes);
+		textField = new JTextField(SwingConstants.LEFT);
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		textField.setBounds(175, 187, 265, 45);
+		panelEjercicio.add(textField);
+		textField.setColumns(10);
 		
 		JButton btnCorregir = new JButton("Corregir");
 		btnCorregir.setBackground(new Color(127, 255, 0));
@@ -111,7 +85,6 @@ public class JPanelSimplificar extends JPanel{
 		completar.setBackground(new Color(100, 100, 255));
 		completar.setBounds(550, 490, 166, 34);
 		this.add(completar);
-		
 		completar.addActionListener(new ActionListener() {
 
 			@Override
@@ -154,17 +127,26 @@ public class JPanelSimplificar extends JPanel{
 		btnCorregir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int num = Integer.parseInt(numeradorRes.getText());
-				int den = Integer.parseInt(denominadorRes.getText());
+				int num = Integer.parseInt(lblNewLabel.getText());
 				
-				Fraccion res = new Fraccion(num, den);
+				ArrayList<Integer> res = new ArrayList<>();
 				
-				Fraccion ejercicio = SimplificarFracciones.Simplificar(ejercicios.get(ejerciciosIndex));
+				res = CalculosMatematicos.DescomposicionPrimos(num, res);
 				
-				System.out.println(ejercicio.getNumerador());
-				System.out.println(ejercicio.getDenominador());
+				String[] numbers = textField.getText().split(" ");
 				
-				if(res.equals(ejercicio)) {
+				int matches = 0;
+				for(int i=0; i<res.size(); i++) {
+					
+					int n1 = Integer.parseInt(numbers[i]);
+					
+					if(n1 == res.get(i)) {
+						matches++;
+					}
+					
+				}
+				
+				if(matches == res.size()) {
 					if(ejerciciosIndex < 4) {
 						arrow_1.setVisible(true);
 					}
@@ -175,49 +157,70 @@ public class JPanelSimplificar extends JPanel{
 				
 			}
 		});
-		
-		
 	}
 	
-	protected void DisplayExercise(Fraccion ejercicio) {
-		denominadorRes.setText("");
-		numeradorRes.setText("");
-		
+	protected void DisplayExercise(Integer ejercicio) {
+		textField.setText("");
 		lblNumeroEjercicio.setText((ejerciciosIndex + 1)+" de "+ejercicios.size());
-		
-		numerador.setText(ejercicio.getNumerador()+"");
-		denominador.setText(ejercicio.getDenominador()+"");	
+		lblNewLabel.setText(ejercicio+"");
 	}
 
 	void SelectRandomExercises() {
-		boolean seguir=true;
-		try {
-			ObjectInputStream read = new ObjectInputStream(new FileInputStream(EjerciciosSimplificar));
-			
-			while(seguir) {
-				Fraccion ejercicio = (Fraccion)read.readObject();
-				ejercicios.add(ejercicio);
-			}
-			
-			read.close();
-		}catch (EOFException e1) {
-			
-			if(ejercicios.size() > 5) {
+			boolean seguir = true;
+			try {
+				DataInputStream read = new DataInputStream(new FileInputStream(ejerciciosDescomposicion));
 				
-				for(int i=ejercicios.size(); i > 5; i--) {
-					int index = (int)(Math.random() * ejercicios.size());
-					ejercicios.remove(index);
+				Integer ejercicio;
+				
+					ejercicio = read.readInt();
+			
+				while(seguir) {
+					ejercicios.add(ejercicio);
+					ejercicio = read.readInt();
 				}
 				
-			}
-			
-			seguir = false;
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			  e1.printStackTrace();
-		} catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
-		}
+				read.close();
+			}catch(EOFException e) {
+				System.out.println(ejercicios.size());
+				if(ejercicios.size() > 5) {
+					
+					for(int i=ejercicios.size(); i > 5; i--) {
+						int index = (int)(Math.random() * ejercicios.size());
+						ejercicios.remove(index);
+					}
+					
+				}
+				
+				seguir = false;
+			}catch (IOException e) {
+				e.printStackTrace();
+			}		
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

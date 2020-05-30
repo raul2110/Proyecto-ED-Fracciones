@@ -1,4 +1,4 @@
-package jframePersonalClases;
+package clasesJPanelPersonales;
 
 import java.awt.Color;
 import java.awt.Font;

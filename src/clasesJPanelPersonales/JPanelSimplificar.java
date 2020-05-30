@@ -1,4 +1,4 @@
-package main.java.com.ejercicioDelCurso.proyectoDePartidaFracciones;
+package clasesJPanelPersonales;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -10,11 +10,8 @@ import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -24,28 +21,28 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.plaf.basic.BasicArrowButton;
 
+import fracciones.Fraccion;
+import fracciones.SimplificarFracciones;
 import main.java.com.ejercicioDelCurso.proyectoDePartidaFracciones.Interfaz;
-import objects.Exercise_MCD_MCM;
-import objects.TypeOfExercise;
 
-public class JPanelMCD extends JPanel{	
+public class JPanelSimplificar extends JPanel{
 	
-	JLabel lblNewLabel, lblNumeroEjercicio ;
-	JTextField textField;
+	JTextField denominadorRes, numeradorRes;
 	
-	File ejerciciosMCD = new File("EjerciciosMCD_MCM");
+	JLabel lblNumeroEjercicio, lblTitulo, numerador, denominador;
 	
-	ArrayList<Exercise_MCD_MCM> ejercicios = new ArrayList<>();
+	File EjerciciosSimplificar = new File("EjerciciosSimplificar");
+	
+	ArrayList<Fraccion> ejercicios = new ArrayList<>();
 	
 	int ejerciciosIndex = 0;
 	
-	public JPanelMCD () throws IOException {
-		
-		this.setBackground(new Color(255, 204, 255));
+	public JPanelSimplificar() {
+		this.setBackground(new Color(123, 104, 238));
 		this.setBounds(0, 0, 784, 561);
 		this.setLayout(null);
 		
-		JLabel lblTitulo = new JLabel("", SwingConstants.CENTER);
+		lblTitulo = new JLabel("", SwingConstants.CENTER);
 		lblTitulo.setFont(new Font("DejaVu Sans", Font.BOLD, 23));
 		lblTitulo.setBounds(147, 11, 490, 54);
 		this.add(lblTitulo);
@@ -57,25 +54,45 @@ public class JPanelMCD extends JPanel{
 		
 		JPanel panelEjercicio = new JPanel();
 		panelEjercicio.setBackground(Color.WHITE);
-		panelEjercicio.setBounds(84, 194, 616, 196);
+		panelEjercicio.setBounds(84, 155, 616, 300);
 		this.add(panelEjercicio);
 		panelEjercicio.setLayout(null);
 		
-		lblNewLabel = new JLabel("", SwingConstants.RIGHT);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		lblNewLabel.setBounds(10, 74, 255, 45);
+		numerador = new JLabel("", SwingConstants.CENTER);
+		numerador.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		numerador.setBounds(150, 76, 130, 50);
+		panelEjercicio.add(numerador);
+		
+		JLabel lblNewLabel = new JLabel("---------------",  SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel.setBounds(150, 146, 130, 14);
 		panelEjercicio.add(lblNewLabel);
 		
-		textField = new JTextField(SwingConstants.LEFT);
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		textField.setBounds(341, 74, 265, 45);
-		panelEjercicio.add(textField);
-		textField.setColumns(10);
+		denominador = new JLabel("", SwingConstants.CENTER);
+		denominador.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		denominador.setBounds(150, 176, 130, 50);
+		panelEjercicio.add(denominador);
 		
-		JLabel lblNewLabel_1 = new JLabel("=", SwingConstants.CENTER);
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblNewLabel_1.setBounds(285, 74, 46, 45);
-		panelEjercicio.add(lblNewLabel_1);
+		JLabel lblEquals = new JLabel("=", SwingConstants.CENTER);
+		lblEquals.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		lblEquals.setBounds(278, 11, 59, 278);
+		panelEjercicio.add(lblEquals);
+		
+		numeradorRes = new JTextField(SwingConstants.CENTER);
+		numeradorRes.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		numeradorRes.setBounds(347, 76, 130, 50);
+		panelEjercicio.add(numeradorRes);
+		numeradorRes.setColumns(10);
+		
+		JLabel lblNewLabel1 = new JLabel("---------------",  SwingConstants.CENTER);
+		lblNewLabel1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel1.setBounds(347, 146, 130, 14);
+		panelEjercicio.add(lblNewLabel1);
+		
+		denominadorRes = new JTextField(10);
+		denominadorRes.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		denominadorRes.setBounds(347, 176, 130, 50);
+		panelEjercicio.add(denominadorRes);
 		
 		JButton btnCorregir = new JButton("Corregir");
 		btnCorregir.setBackground(new Color(127, 255, 0));
@@ -137,17 +154,17 @@ public class JPanelMCD extends JPanel{
 		btnCorregir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int res = Integer.parseInt(textField.getText());
+				int num = Integer.parseInt(numeradorRes.getText());
+				int den = Integer.parseInt(denominadorRes.getText());
 				
-				Exercise_MCD_MCM ejercicio = ejercicios.get(ejerciciosIndex);
+				Fraccion res = new Fraccion(num, den);
 				
-				if(ejercicio.getTypeOfExercise() == null) {
-					ejercicio.setTypeOfExercise(Interfaz.tipoDeEjercicio);
-				}
+				Fraccion ejercicio = SimplificarFracciones.Simplificar(ejercicios.get(ejerciciosIndex));
 				
-				System.out.println(ejercicio.getResultado());
+				System.out.println(ejercicio.getNumerador());
+				System.out.println(ejercicio.getDenominador());
 				
-				if(res == ejercicio.getResultado()) {
+				if(res.equals(ejercicio)) {
 					if(ejerciciosIndex < 4) {
 						arrow_1.setVisible(true);
 					}
@@ -158,28 +175,33 @@ public class JPanelMCD extends JPanel{
 				
 			}
 		});
+		
+		
 	}
 	
-	protected void DisplayExercise(Exercise_MCD_MCM ejercicio) {
-		textField.setText("");
+	protected void DisplayExercise(Fraccion ejercicio) {
+		denominadorRes.setText("");
+		numeradorRes.setText("");
+		
 		lblNumeroEjercicio.setText((ejerciciosIndex + 1)+" de "+ejercicios.size());
-		lblNewLabel.setText("("+ejercicio.getN1()+", "+ejercicio.getN2()+")");
+		
+		numerador.setText(ejercicio.getNumerador()+"");
+		denominador.setText(ejercicio.getDenominador()+"");	
 	}
 
 	void SelectRandomExercises() {
 		boolean seguir=true;
 		try {
-			ObjectInputStream read = new ObjectInputStream(new FileInputStream(ejerciciosMCD));
+			ObjectInputStream read = new ObjectInputStream(new FileInputStream(EjerciciosSimplificar));
 			
 			while(seguir) {
-				Exercise_MCD_MCM ejercicio = (Exercise_MCD_MCM)read.readObject();
+				Fraccion ejercicio = (Fraccion)read.readObject();
 				ejercicios.add(ejercicio);
 			}
 			
 			read.close();
-		} catch (EOFException e1) {
+		}catch (EOFException e1) {
 			
-			System.out.println(ejercicios.size());
 			if(ejercicios.size() > 5) {
 				
 				for(int i=ejercicios.size(); i > 5; i--) {
@@ -199,26 +221,3 @@ public class JPanelMCD extends JPanel{
 		}
 	}
 }
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

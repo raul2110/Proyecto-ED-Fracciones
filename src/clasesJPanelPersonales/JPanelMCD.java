@@ -1,4 +1,4 @@
-package main.java.com.ejercicioDelCurso.proyectoDePartidaFracciones;
+package clasesJPanelPersonales;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -6,13 +6,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.io.DataInputStream;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -22,22 +24,24 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.plaf.basic.BasicArrowButton;
 
-import fracciones.CalculosMatematicos;
 import main.java.com.ejercicioDelCurso.proyectoDePartidaFracciones.Interfaz;
+import objects.Exercise_MCD_MCM;
+import objects.TypeOfExercise;
 
-public class JPanelDescomponer extends JPanel{
-
+public class JPanelMCD extends JPanel{	
+	
 	JLabel lblNewLabel, lblNumeroEjercicio ;
 	JTextField textField;
 	
-	File ejerciciosDescomposicion = new File("EjerciciosDescomposicion");
+	File ejerciciosMCD = new File("EjerciciosMCD_MCM");
 	
-	ArrayList<Integer> ejercicios = new ArrayList<>();
+	ArrayList<Exercise_MCD_MCM> ejercicios = new ArrayList<>();
 	
 	int ejerciciosIndex = 0;
 	
-	public JPanelDescomponer(){
-		this.setBackground(new Color(233, 150, 122));
+	public JPanelMCD () throws IOException {
+		
+		this.setBackground(new Color(255, 204, 255));
 		this.setBounds(0, 0, 784, 561);
 		this.setLayout(null);
 		
@@ -53,20 +57,25 @@ public class JPanelDescomponer extends JPanel{
 		
 		JPanel panelEjercicio = new JPanel();
 		panelEjercicio.setBackground(Color.WHITE);
-		panelEjercicio.setBounds(84, 146, 616, 279);
+		panelEjercicio.setBounds(84, 194, 616, 196);
 		this.add(panelEjercicio);
 		panelEjercicio.setLayout(null);
 		
-		lblNewLabel = new JLabel("", SwingConstants.CENTER);
+		lblNewLabel = new JLabel("", SwingConstants.RIGHT);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		lblNewLabel.setBounds(180, 54, 255, 45);
+		lblNewLabel.setBounds(10, 74, 255, 45);
 		panelEjercicio.add(lblNewLabel);
 		
 		textField = new JTextField(SwingConstants.LEFT);
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		textField.setBounds(175, 187, 265, 45);
+		textField.setBounds(341, 74, 265, 45);
 		panelEjercicio.add(textField);
 		textField.setColumns(10);
+		
+		JLabel lblNewLabel_1 = new JLabel("=", SwingConstants.CENTER);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 25));
+		lblNewLabel_1.setBounds(285, 74, 46, 45);
+		panelEjercicio.add(lblNewLabel_1);
 		
 		JButton btnCorregir = new JButton("Corregir");
 		btnCorregir.setBackground(new Color(127, 255, 0));
@@ -85,6 +94,7 @@ public class JPanelDescomponer extends JPanel{
 		completar.setBackground(new Color(100, 100, 255));
 		completar.setBounds(550, 490, 166, 34);
 		this.add(completar);
+		
 		completar.addActionListener(new ActionListener() {
 
 			@Override
@@ -127,26 +137,17 @@ public class JPanelDescomponer extends JPanel{
 		btnCorregir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int num = Integer.parseInt(lblNewLabel.getText());
+				int res = Integer.parseInt(textField.getText());
 				
-				ArrayList<Integer> res = new ArrayList<>();
+				Exercise_MCD_MCM ejercicio = ejercicios.get(ejerciciosIndex);
 				
-				res = CalculosMatematicos.DescomposicionPrimos(num, res);
-				
-				String[] numbers = textField.getText().split(" ");
-				
-				int matches = 0;
-				for(int i=0; i<res.size(); i++) {
-					
-					int n1 = Integer.parseInt(numbers[i]);
-					
-					if(n1 == res.get(i)) {
-						matches++;
-					}
-					
+				if(ejercicio.getTypeOfExercise() == null) {
+					ejercicio.setTypeOfExercise(Interfaz.tipoDeEjercicio);
 				}
 				
-				if(matches == res.size()) {
+				System.out.println(ejercicio.getResultado());
+				
+				if(res == ejercicio.getResultado()) {
 					if(ejerciciosIndex < 4) {
 						arrow_1.setVisible(true);
 					}
@@ -159,50 +160,47 @@ public class JPanelDescomponer extends JPanel{
 		});
 	}
 	
-	protected void DisplayExercise(Integer ejercicio) {
+	protected void DisplayExercise(Exercise_MCD_MCM ejercicio) {
 		textField.setText("");
 		lblNumeroEjercicio.setText((ejerciciosIndex + 1)+" de "+ejercicios.size());
-		lblNewLabel.setText(ejercicio+"");
+		lblNewLabel.setText("("+ejercicio.getN1()+", "+ejercicio.getN2()+")");
 	}
 
 	void SelectRandomExercises() {
-			boolean seguir = true;
-			try {
-				DataInputStream read = new DataInputStream(new FileInputStream(ejerciciosDescomposicion));
-				
-				Integer ejercicio;
-				
-					ejercicio = read.readInt();
+		boolean seguir=true;
+		try {
+			ObjectInputStream read = new ObjectInputStream(new FileInputStream(ejerciciosMCD));
 			
-				while(seguir) {
-					ejercicios.add(ejercicio);
-					ejercicio = read.readInt();
+			while(seguir) {
+				Exercise_MCD_MCM ejercicio = (Exercise_MCD_MCM)read.readObject();
+				ejercicios.add(ejercicio);
+			}
+			
+			read.close();
+		} catch (EOFException e1) {
+			
+			System.out.println(ejercicios.size());
+			if(ejercicios.size() > 5) {
+				
+				for(int i=ejercicios.size(); i > 5; i--) {
+					int index = (int)(Math.random() * ejercicios.size());
+					ejercicios.remove(index);
 				}
 				
-				read.close();
-			}catch(EOFException e) {
-				System.out.println(ejercicios.size());
-				if(ejercicios.size() > 5) {
-					
-					for(int i=ejercicios.size(); i > 5; i--) {
-						int index = (int)(Math.random() * ejercicios.size());
-						ejercicios.remove(index);
-					}
-					
-				}
-				
-				seguir = false;
-			}catch (IOException e) {
-				e.printStackTrace();
-			}		
+			}
+			
+			seguir = false;
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			  e1.printStackTrace();
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
 	}
 }
 
-
-
-
-
-
+	
 
 
 
