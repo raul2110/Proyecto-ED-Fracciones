@@ -1,4 +1,4 @@
-package main.java.com.ejercicioDelCurso.proyectoDePartidaFracciones;
+package objects;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;

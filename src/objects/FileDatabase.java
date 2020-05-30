@@ -1,4 +1,4 @@
-package main.java.com.ejercicioDelCurso.proyectoDePartidaFracciones;
+package objects;
 
 import java.io.EOFException;
 import java.io.File;
