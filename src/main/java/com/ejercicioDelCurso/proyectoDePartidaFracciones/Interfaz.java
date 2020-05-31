@@ -143,6 +143,8 @@ public class Interfaz extends JFrame {
 		/*------------------------------------------------------------*/
 		/*------------------------------------------------------------*/
 		/*-------------------visibilidad paneles----------------------*/
+		
+		
 		panelInicio.setVisible(true);
 		panelUsuarios.setVisible(false);
 		panelAlumno.setVisible(true);
@@ -162,7 +164,8 @@ public class Interfaz extends JFrame {
 		/*------------------------------------------------------------*/
 		/*------------------------------------------------------------*/
 		/*-------------------------metodos----------------------------*/
-			
+		
+		
 		back.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -283,42 +286,5 @@ public class Interfaz extends JFrame {
 		
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

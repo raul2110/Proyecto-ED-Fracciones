@@ -18,7 +18,7 @@ import objects.TypeOfUser;
 
 public class JPanelRegistro extends JPanel{
 		JTextField textFieldCorreo;
-		JPasswordField passwordFieldContrase�a;
+		JPasswordField passwordFieldContraseña;
 		JLabel lblRegistroAdvice;
 		
 		TypeOfUser tipoDeUsuario = TypeOfUser.ALUMNO;
@@ -66,19 +66,19 @@ public class JPanelRegistro extends JPanel{
 			msgIntroducirCorreo.setBounds(32, 56, 136, 19);
 			panelDatos.add(msgIntroducirCorreo);
 			
-			JLabel msgIntroducirContrase�a = new JLabel("Contraseña:", SwingConstants.RIGHT);
-			msgIntroducirContrase�a.setFont(new Font("Bahnschrift", Font.BOLD, 15));
-			msgIntroducirContrase�a.setBounds(32, 86, 136, 19);
-			panelDatos.add(msgIntroducirContrase�a);
+			JLabel msgIntroducirContraseña = new JLabel("Contraseña:", SwingConstants.RIGHT);
+			msgIntroducirContraseña.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+			msgIntroducirContraseña.setBounds(32, 86, 136, 19);
+			panelDatos.add(msgIntroducirContraseña);
 			
 			textFieldCorreo = new JTextField();
 			textFieldCorreo.setBounds(178, 54, 183, 20);
 			panelDatos.add(textFieldCorreo);
 			textFieldCorreo.setColumns(10);
 			
-			passwordFieldContrase�a = new JPasswordField();
-			passwordFieldContrase�a.setBounds(178, 84, 183, 20);
-			panelDatos.add(passwordFieldContrase�a);
+			passwordFieldContraseña = new JPasswordField();
+			passwordFieldContraseña.setBounds(178, 84, 183, 20);
+			panelDatos.add(passwordFieldContraseña);
 			
 			JButton submitBtn = new JButton("Registrar");
 			submitBtn.setBounds(178, 150, 100, 20);
@@ -146,16 +146,16 @@ public class JPanelRegistro extends JPanel{
 		void CreateAccount() {
 			try {
 				String correo = textFieldCorreo.getText(), 
-					contrase�a = new String(passwordFieldContrase�a.getPassword()),
+					contraseña = new String(passwordFieldContraseña.getPassword()),
 					advice = "Cuenta creada correctamente";
 				
 				Color adviceColor = Color.BLUE;
 				
-				if(correo.isEmpty() || contrase�a.isEmpty()) {	
+				if(correo.isEmpty() || contraseña.isEmpty()) {	
 					advice = "Debe introducir valores en ambos campos";
 					adviceColor = Color.RED;
 					
-				}else if(!Interfaz.database.Add(correo, contrase�a, tipoDeUsuario)) {
+				}else if(!Interfaz.database.Add(correo, contraseña, tipoDeUsuario)) {
 					advice = "El correo ya está asociado a otra cuenta";
 					adviceColor = Color.RED;
 				}
